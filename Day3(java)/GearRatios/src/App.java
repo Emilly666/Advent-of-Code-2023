@@ -7,25 +7,30 @@ public class App {
     public static void main(String[] args) {
         // declarations
         List<String> inputTable = new ArrayList<>();
+        List<Number> numberList = new ArrayList<>();
         File myObj = new File("Day3(java)/test.txt");
         Pattern numberPattern = Pattern.compile("(\\d+)");
 
-        // create list of lists of characters
+        // create list of Strings
         inputTable = initInput(myObj);
 
+        int i = 0;
         for (String line : inputTable){
             Matcher matcher = numberPattern.matcher(line);
-
+            //iterate over matches and create list of Numbers
             while (matcher.find()) {
                 List<Integer> idx = new ArrayList<>();
-                for (int i = matcher.start(); i < matcher.end(); i++){
-                    idx.add(i);
+                for (int j = matcher.start(); j < matcher.end(); j++){
+                    idx.add(j);
                 }
-
-                Number n = new Number(Integer.parseInt(matcher.group()), idx);
-                System.out.println(n.indexes);
+                numberList.add( new Number(Integer.parseInt(matcher.group()), idx, i) );
             }
-            System.out.println("\n");
+            i++;
+        }
+        //iterate over list of Numbers and find out if they are part numbers
+
+        for (Number n : numberList){
+            System.out.println(n);
         }
 
 
@@ -34,23 +39,33 @@ public class App {
         System.out.println(inputTable);
     }
 
+
+
+
+
+
+
+
+
+
+
+
     static private class Number{
         int value = 0;
         List<Integer> indexes = new ArrayList<>();
         boolean isPartNumber = true;
+        int line;
         
-        private Number(int val, List<Integer> idx){
+        public Number(int val, List<Integer> idx, int l){
             value = val;
             indexes = idx;
+            line = l;
+        }
+        @Override
+        public String toString (){
+            return "line: " + line + ", value: " + value + ", indexes: " + indexes.toString() + ", is part number: " + isPartNumber;
         }
     }
-
-
-
-
-
-
-
     private static List<String> initInput(File input) {
         List<String> returnList = new ArrayList<>();
         Scanner myReader;
