@@ -4,14 +4,14 @@ import java.util.*;
 import java.util.regex.*;
 
 public class PartNumber {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws FileNotFoundException {
         // declarations
         List<String> inputTable = new ArrayList<>();
         List<Number> numberList = new ArrayList<>();
         File myObj = new File("Day3(java)/input.txt");
         Pattern numberPattern = Pattern.compile("(\\d+)");
         Pattern characterPattern = Pattern.compile("[^.\\d]");
-        int pattNumberSum = 0;
+        int partNumberSum = 0;
 
         // create list of Strings
         inputTable = initInput(myObj);
@@ -46,18 +46,15 @@ public class PartNumber {
         }
         for (Number n : numberList){
             if (n.isPartNumber){
-                pattNumberSum += n.value;
+                partNumberSum += n.value;
             }
         }
-        System.out.println(pattNumberSum);
+        System.out.println(partNumberSum);
     }
 
     static private class Number{
-        int value = 0;
-        int indexStart;
-        int indexEnd;
+        int value, indexStart, indexEnd, line;
         boolean isPartNumber = false;
-        int line;
         
         public Number(int val, int idx1, int idx2, int l){
             value = val;
@@ -65,25 +62,18 @@ public class PartNumber {
             indexEnd = idx2;
             line = l;
         }
-        @Override
-        public String toString (){
-            return "line: " + line + ", value: " + value + ", indexes: " + indexStart + "-" + indexEnd  + ", is part number: " + isPartNumber;
-        }
     }
 
-    private static List<String> initInput(File input) {
+    private static List<String> initInput(File input) throws FileNotFoundException {
         List<String> returnList = new ArrayList<>();
         Scanner myReader;
-        try {
-            myReader = new Scanner(input);
-            while (myReader.hasNextLine()) {
-                returnList.add(myReader.nextLine());
-            }
-            myReader.close();
-        } catch (FileNotFoundException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+        myReader = new Scanner(input);
+
+        while (myReader.hasNextLine()) {
+            returnList.add(myReader.nextLine());
         }
+
+        myReader.close();
         return returnList;
     }
 }
