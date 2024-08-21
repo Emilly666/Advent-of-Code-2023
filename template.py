@@ -6,7 +6,8 @@ def main():
     f()
 
 def f(filename = "input.txt"):
-    pass
+    
+    return None
 
 if __name__ == "__main__":
     main()
