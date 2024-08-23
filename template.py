@@ -6,7 +6,7 @@ def main():
     f()
 
 def f(filename = "input.txt"):
-    
+    text = open(ROOT_DIR / filename, "r").read()
     return None
 
 if __name__ == "__main__":

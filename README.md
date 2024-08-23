@@ -7,7 +7,7 @@
 - DAY  4 : PL/SQL
 - DAY  5 : Python
 - DAY  6 : Python
-- DAY  7 :
+- DAY  7 : Python
 - DAY  8 :
 - DAY  9 :
 - DAY 11 :
