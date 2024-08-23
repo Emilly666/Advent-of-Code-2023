@@ -1,5 +1,4 @@
 --set serveroutput on;
-
 -------------------------create schema level objects-----------------------------------------------
 CREATE OR REPLACE DIRECTORY DIR__DAY4 AS 'C:\Repos\Advent-of-Code-2023\Day4(PLSQL)';
 
@@ -11,27 +10,22 @@ CREATE TABLE CARDS
     WINNING_NUMBERS T_CARD_NUMBERS,
     CARD_NUMBERS T_CARD_NUMBERS,
     WINNING_COUNT NUMBER,
-    POINTS NUMBER
+    POINTS NUMBER,
+    APPEARANCES NUMBER DEFAULT 1
 )
     NESTED TABLE WINNING_NUMBERS STORE AS WINNING_NUMBERS_TABLE,
-    NESTED TABLE CARD_NUMBERS STORE AS CARD_NUMBERS_TABLE
-;
-/*
-SELECT * FROM CARDS;
-DROP TABLE CARDS;
-TRUNCATE TABLE CARDS;
-COMMIT;
-*/
-
+    NESTED TABLE CARD_NUMBERS STORE AS CARD_NUMBERS_TABLE;
 -------------------------execute function----------------------------------------------------------
 BEGIN
     EXECUTE IMMEDIATE ('TRUNCATE TABLE TEST.CARDS');
-    dbms_output.PUT_LINE(SCRATCHCARDS.COUNT_WINNINGS('input.txt'));
+    --dbms_output.PUT_LINE(SCRATCHCARDS.COUNT_WINNINGS('input.txt'));
+    dbms_output.PUT_LINE(SCRATCHCARDS.COUNT_WINNINGS_WITH_APPERANCES('input.txt'));
 END;
-/
+/ 
 -------------------------package definition--------------------------------------------------------
 CREATE OR REPLACE PACKAGE SCRATCHCARDS AS
     FUNCTION COUNT_WINNINGS(file_name VARCHAR2) RETURN NUMBER;
+    FUNCTION COUNT_WINNINGS_WITH_APPERANCES(file_name VARCHAR2) RETURN NUMBER;
 END SCRATCHCARDS;
 /
 -------------------------package body definition---------------------------------------------------
@@ -113,7 +107,23 @@ CREATE OR REPLACE PACKAGE BODY SCRATCHCARDS AS
 
         END LOOP;
     END CALCULATE_WINNINGS;
--------------------------main function-------------------------------------------------------------
+-------------------------calculate appearances-----------------------------------------------------
+    PROCEDURE CALCULATE_APPERANCEES AS
+         v_row_count NUMBER;
+         v_card_row CARDS%ROWTYPE;
+    BEGIN
+        SELECT COUNT(*) INTO v_row_count FROM CARDS;
+
+        FOR i in 1..v_row_count LOOP
+            SELECT * INTO v_card_row FROM CARDS WHERE CARD_NUMBER = i;
+
+            UPDATE CARDS
+            SET APPEARANCES = APPEARANCES + v_card_row.APPEARANCES 
+            WHERE CARD_NUMBER BETWEEN v_card_row.CARD_NUMBER + 1 AND v_card_row.CARD_NUMBER + v_card_row.WINNING_COUNT;
+
+        END LOOP;
+    END CALCULATE_APPERANCEES;
+-------------------------main function for part 1--------------------------------------------------
     FUNCTION COUNT_WINNINGS(file_name VARCHAR2) RETURN NUMBER AS
         v_sum NUMBER := 0;
     BEGIN
@@ -124,4 +134,16 @@ CREATE OR REPLACE PACKAGE BODY SCRATCHCARDS AS
 
         RETURN(v_sum);
     END COUNT_WINNINGS;
+-------------------------main function for part 2--------------------------------------------------
+    FUNCTION COUNT_WINNINGS_WITH_APPERANCES(file_name VARCHAR2) RETURN NUMBER AS
+        v_sum NUMBER := 0;
+    BEGIN
+        SCRATCHCARDS.READ_FILE(file_name);
+        SCRATCHCARDS.CALCULATE_WINNINGS;
+        SCRATCHCARDS.CALCULATE_APPERANCEES;
+
+        SELECT SUM(APPEARANCES) INTO v_sum FROM CARDS;
+
+        RETURN(v_sum);
+    END COUNT_WINNINGS_WITH_APPERANCES;
 END SCRATCHCARDS;
