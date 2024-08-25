@@ -8,7 +8,7 @@
 - DAY  5 : Python
 - DAY  6 : Python
 - DAY  7 : Python
-- DAY  8 :
+- DAY  8 : Python
 - DAY  9 :
 - DAY 11 :
 - DAY 12 :
