@@ -9,8 +9,8 @@
 - DAY  6 : Python
 - DAY  7 : Python
 - DAY  8 : Python
-- DAY  9 :
-- DAY 11 :
+- DAY  9 : Python
+- DAY 11 : Python
 - DAY 12 :
 - DAY 13 :
 - DAY 14 :
