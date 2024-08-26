@@ -1,13 +1,16 @@
 from pathlib import Path
 
-ROOT_DIR = Path(__file__).parent
-
 def main():
-    f()
+    print(f("test.txt"))
 
 def f(filename = "input.txt"):
-    text = open(ROOT_DIR / filename, "r").read()
-    return None
+    text = initialize(filename)
+    return text
+
+def initialize(filename):
+    with open(Path(__file__).parent / filename, "r") as file:
+        lines = file.read()
+    return lines
 
 if __name__ == "__main__":
     main()
