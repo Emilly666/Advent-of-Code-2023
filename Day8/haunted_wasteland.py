@@ -5,8 +5,6 @@ from math import lcm
 ROOT_DIR = Path(__file__).parent
 
 def main():
-
-    #print(navigate())
     print(navigate_ghosts())
 
 def navigate_ghosts(filename = "input.txt"):
