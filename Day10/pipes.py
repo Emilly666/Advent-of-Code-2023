@@ -7,12 +7,13 @@ def main():
 def f(filename = "input.txt"):
     text = initialize(filename)
     map = [[*line] for line in text]
+    
     start_index = find_S(map)
     return start_index, map[start_index[0]][start_index[1]]
 
 def initialize(filename):
     with open(Path(__file__).parent / filename, "r") as file:
-        lines = file.read()
+        lines = file.read().split("\n")
     return lines
 
 def find_S(map):
