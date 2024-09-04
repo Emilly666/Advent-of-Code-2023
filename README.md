@@ -12,9 +12,9 @@
 - DAY  9 : Python
 - DAY 10 : Python
 - DAY 11 : Python
-- DAY 12 :
-- DAY 13 :
-- DAY 14 :
+- DAY 12 : :c
+- DAY 13 : Python
+- DAY 14 : Python
 - DAY 15 :
 - DAY 16 :
 - DAY 17 :
