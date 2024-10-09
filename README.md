@@ -15,8 +15,8 @@
 - DAY 12 : :c
 - DAY 13 : Python
 - DAY 14 : Python
-- DAY 15 :
-- DAY 16 :
+- DAY 15 : Python
+- DAY 16 : Python
 - DAY 17 :
 - DAY 18 :
 - DAY 19 :
