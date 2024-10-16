@@ -1,7 +1,8 @@
 from pathlib import Path
+from pprint import pprint
 
 def main():
-    print(f("test.txt"))
+    pprint(f("test.txt"))
 
 def f(filename = "input.txt"):
     text = initialize(filename)
